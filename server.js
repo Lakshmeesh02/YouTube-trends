@@ -2,9 +2,12 @@ require ('dotenv').config()
 const express=require("express")
 const axios=require("axios")
 const cors=require("cors")
+const path=require('path')
 
 const app=express()
 app.use(cors())
+
+app.use(express.static(path.join(__dirname, 'public')))
 
 const API_KEY=process.env.API_KEY
 
