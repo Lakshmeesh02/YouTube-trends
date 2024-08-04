@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Trending Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>YouTube Trending Analysis</h1>
+    <canvas id="viewsChart" width="400" height="200"></canvas>
+    <p>Total Views: <span id="totalViews"></span></p>
+    <p>Average Likes: <span id="avgLikes"></span></p>
+
+    <script>
+        async function fetchTrendingVideos() {
+            try {
+                const response = await fetch('/trending'); // Make the request to the server
+                const data = await response.json();
+                document.getElementById('totalViews').textContent = data.totalviews;
+                document.getElementById('avgLikes').textContent = data.avglikes;
+
+                // Prepare data for the chart
+                const ctx = document.getElementById('viewsChart').getContext('2d');
+                const titles = data.videodata.map(video => video.title);
+                const views = data.videodata.map(video => video.views);
+
+                // Create the chart
+                const chart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: titles,
+                        datasets: [{
+                            label: 'Views',
+                            data: views,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching trending videos:', error);
+            }
+        }
+
+        fetchTrendingVideos();
+    </script>
+</body>
+</html>
