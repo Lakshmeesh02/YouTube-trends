@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <title> Trending </title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body>
+        <h1> Youtube trending videos analysis </h1>
+        <canvas id="chart" width="400" height="200"></canvas>
+        <p> Total views: <span id="totalviews"></span></p>
+        <p> Average likes: <span id="avglikes"></span> </p>
+
+        <script>
+            async function fetchtrendingvideos() {
+                const response=await fetch("https://localhost:5000/trending")
+                const data=await response.json()
+                document.getElementById("totalviews").textContent=data.totalViews
+                document.getElementById("avglikes").textContent=data.avglikes
+                const ctx=document.getElementById("chart").getContext('2d')
+                const titles=data.videoData.map(video=> video.title)
+                const views=data.videoData.map(video=>video.views)
+
+                const chart= new Chart(ctx, {
+                    type: 'bar', 
+                    data: {
+                        labels: titles,
+                        datasets: [{
+                            label: 'views', 
+                            data: views,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)', 
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                })
+            }
+
+            fetchtrendingvideos()
+        </script>
+    </body>
+</html>
