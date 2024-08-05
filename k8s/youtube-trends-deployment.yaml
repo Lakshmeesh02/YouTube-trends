@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: youtube-trends
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels: 
+      app: youtube-trends
+  template:
+    metadata: 
+      labels:
+       app: youtube-trends
+    spec: 
+      containers: 
+      - name: youtube-trends
+        image: youtube-trends
+        ports: 
+        - containerPort: 5000
