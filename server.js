@@ -38,6 +38,6 @@ app.get('/trending', async(req, res)=> {
     }
 })
 
-app.listen(5000, ()=> {
-    console.log("Server running on localhost: port 5k")
+app.listen(5000, '0.0.0.0', ()=> {
+    console.log("Server running on 0.0.0.0: port 5k")
 })
