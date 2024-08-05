@@ -14,6 +14,6 @@ spec:
     spec: 
       containers: 
       - name: youtube-trends
-        image: youtube-trends
+        image: pes1ug21cs298/youtube-trends:latest
         ports: 
         - containerPort: 5000
