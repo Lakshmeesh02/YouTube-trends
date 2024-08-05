@@ -1,10 +1,13 @@
 apiVersion: v1
 kind: Service
-metadata: 
+metadata:
   name: youtube-trends
-spec: 
-  ports: 
-  - port: 5000
+spec:
   selector:
     app: youtube-trends
+  ports:
+    - port: 5000
+      nodePort: 32172
+      protocol: TCP
+      targetPort: 5000
   type: NodePort
